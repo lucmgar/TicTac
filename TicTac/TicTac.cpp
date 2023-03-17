@@ -16,6 +16,7 @@ void setup(char (&gameboard)[9][9], int x, int y) {
 }
 
 void displayBoard(char (&gameboard)[9][9]){
+	cout << "_________________________________________________________________" << endl << endl;
 	cout << "                 " << "  |  " << "                 " << "  |  " << "                 " << endl;
 	cout << "     |     |     " << "  |  " << "     |     |     " << "  |  " << "     |     |     " << endl;
 	cout << "  " << gameboard[0][0] << "  |  " << gameboard[0][1] << "  |  " << gameboard[0][2] << "  " << "  |  " "  " << gameboard[1][0] << "  |  " << gameboard[1][1] << "  |  " << gameboard[1][2] << "    |  " << "  " << gameboard[2][0] << "  |  " << gameboard[2][1] << "  |  " << gameboard[2][2] << "  " << endl;
@@ -72,6 +73,7 @@ int move(char(&gameboard)[9][9], int &turn, char currentplayer, int nextsector, 
 		if (isvalid(gameboard, choice) == true) {
 			turn++;
 			currentsector = choice;
+			cout << "VALID CHOICE" << endl;
 		}
 		else {
 			cout << "INVALID CHOICE, TRY AGAIN" << endl;
@@ -81,12 +83,20 @@ int move(char(&gameboard)[9][9], int &turn, char currentplayer, int nextsector, 
 	}
 	
 	cout << "CURRENT SECTOR: " << currentsector << endl << "CURRENT PLAYER: " << currentplayer << endl << endl;
+	cout << "     |     |    " << endl;
+	cout << "  1  |  2  |  3 " << endl;
+	cout << "_____|_____|_____" << endl;
+	cout << "     |     |    " << endl;
+	cout << "  4  |  5  |  6 " << endl;
+	cout << "_____|_____|_____" << endl;
+	cout << "     |     |    " << endl;
+	cout << "  7  |  8  |  9 " << endl;
+	cout << "     |     |    " << endl << endl;
 	cout << "Which square would you like to occupy ? " << endl;
 	cin >> choice;
 	if (isvalid(gameboard, choice) == true && isopen(gameboard, currentsector, choice) == true) {
-		gameboard[currentsector][choice] = currentplayer;
+		gameboard[currentsector - 1][choice-1] = currentplayer;
 		cout << "Valid and open" << endl;
-		nextsector = choice;
 		turn++;
 	}
 	cout << "Not valid or not open" << endl;
@@ -127,7 +137,7 @@ int main()
 	while (running == true) {
 		displayBoard(gameboard);
 		cout << "TURN #" << turn << endl;
-		move(gameboard, turn, currentplayer, nextsector, choice);
+		nextsector = move(gameboard, turn, currentplayer, nextsector, choice);
 		if (currentplayer == 'X') {
 			currentplayer = 'O';
 		}
